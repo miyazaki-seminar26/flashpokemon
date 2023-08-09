@@ -1,0 +1,107 @@
+/* https://github.com/mayank99/reset.css/blob/main/package/index.css, https://unpkg.com/tailwindcss@3.3.2/src/css/preflight.css を参考に作成 */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:where([hidden]:not([hidden="until-found"])) {
+  display: none !important;
+}
+
+:where(html) {
+  color-scheme: light;
+}
+
+:where(body) {
+  height: 100%;
+  height: 100dvb;
+  margin: 0;
+  /* line-height: 1.5; */
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(hr) {
+  /* border: none; */
+  /* border-top: 1px solid; */
+  color: inherit;
+  height: 0;
+}
+
+:where(p, h1, h2, h3, h4, h5, h6) {
+  overflow-wrap: break-word;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+:where(a) {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+:where(b, strong) {
+  font-weight: bolder;
+}
+
+:where(code, kbd, samp, pre) {
+  font-family: monospace;
+  font-size: 1em;
+}
+
+:where(button, input, optgroup, select, textaera) {
+  font: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+:where(button, select) {
+  text-transform: none;
+}
+
+:where(button) {
+  border-width: 0;
+  border-style: solid;
+}
+
+:where(button, [type="button"], [type="reset"], [type="submit"]) {
+  -webkit-appearance: button;
+  background-image: none;
+}
+
+:where(button, label, select, summary, [role="button"], [role="option"]) {
+  cursor: pointer;
+}
+
+:where(fieldset) {
+  border: none;
+}
+
+:where(:disabled) {
+  cursor: not-allowed;
+}
+
+:where(label:has(> input:disabled), label:has(+ input:disabled)) {
+  cursor: not-allowed;
+}
+
+:where(ul, ol) {
+  list-style: none;
+  padding: 0;
+}
+
+:where(img, svg, video, canvas, audio, iframe, embed, object) {
+  display: block;
+}
+
+:where(img, picture, video, svg) {
+  max-width: 100%;
+  block-size: auto;
+}
