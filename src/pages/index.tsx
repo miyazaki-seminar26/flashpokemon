@@ -3,6 +3,7 @@ import { Button, Center } from "@mantine/core"
 import { Header } from "@/components/layout/header"
 import { BookDialog } from "@/components/BookDialog"
 import { useRouter } from "next/router"
+import Image from "next/image"
 
 const Home = () => {
   const [opened, setOpened] = useState(false)
@@ -15,6 +16,9 @@ const Home = () => {
         <Header />
       </div>
       <div className="min-h-screen flex flex-col justify-center items-center">
+        <div className="absolute top-10">
+          <Image src="/images/poke.png" width={500} height={200} alt="" />
+        </div>
         <Button
           variant="outline"
           color="dark"
