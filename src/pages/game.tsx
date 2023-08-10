@@ -3,6 +3,7 @@ import { Button, Center, Text } from "@mantine/core"
 import Image from "next/image"
 import { Header } from "@/components/layout/header"
 import { LEVEL } from "@/constants/level"
+import { useRouter } from "next/router"
 
 const FlashPokemonGame: React.FC = () => {
   const [countdown, setCountdown] = useState(3)
@@ -11,6 +12,8 @@ const FlashPokemonGame: React.FC = () => {
   const [clickedPokemonIndex, setClickedPokemonIndex] = useState<number>(0)
 
   const [answer, setAnswer] = useState<boolean>(false)
+
+  const router = useRouter()
 
   useEffect(() => {
     // ページ遷移時に初期化
@@ -192,6 +195,7 @@ const FlashPokemonGame: React.FC = () => {
                 onClick={() => {
                   setAnswer(false)
                   setCountdown(3)
+                  router.push("/")
                 }}
               >
                 もう一度
