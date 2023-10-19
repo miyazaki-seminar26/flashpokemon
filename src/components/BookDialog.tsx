@@ -1,54 +1,28 @@
-import React, { useState } from "react"
+import React, { useEffect } from "react"
 import { Modal } from "@mantine/core"
 import Image from "next/image"
+import { useFetchPokemonData } from "@/hooks/useFetchPokemonData"
 
 type Props = {
   opened: boolean
   onClose: () => void
 }
 
-type Pokemon = {
-  name: string
-  sprites: {
-    front_default: string
-  }
-}
-
 export const BookDialog = ({ opened, onClose }: Props) => {
-  // pokemonのデータをpokeapiから取得する
-  const getPokemonData = async () => {
-    const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=40")
-    const data = await res.json()
-    return data
-  }
+  const { fetchPokemonData, pokemon } = useFetchPokemonData()
 
-  const eachPokemonData = async (url: string) => {
-    const res = await fetch(url)
-    const data = await res.json()
-    return data
-  }
-
-  const [pokemon, setPokemon] = useState([] as Pokemon[])
-
-  // ポケモンのデータをstateに格納する
-  const fetchPokemonData = async (): Promise<void> => {
-    const data = await getPokemonData()
-    // dataの中のresultsのurlを再度、eachPokemonDataに渡して、fetchしたものをsetPokemonでstateに格納する
-    const pokemonData = await Promise.all(
-      data.results.map(async (pokemon: { url: string }) => {
-        return await eachPokemonData(pokemon.url)
-      }),
-    )
-    setPokemon(pokemonData)
-  }
-  fetchPokemonData()
+  useEffect(() => {
+    if (opened) {
+      fetchPokemonData()
+    }
+  }, [opened])
 
   return (
     <Modal
       title="ポケモン図鑑"
       opened={opened}
       onClose={onClose}
-      size="md"
+      size="lg"
       styles={{
         content: {
           border: "8px solid #333",

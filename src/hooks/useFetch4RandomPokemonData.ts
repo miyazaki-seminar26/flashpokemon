@@ -1,7 +1,7 @@
 import { recoilPokemonList } from "@/global/atom"
 import { useRecoilState } from "recoil"
 
-export const useFetchPokemonData = () => {
+export const useFetch4RandomPokemonData = () => {
   const getPokemonData = async () => {
     const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=100")
     const data = await res.json()
@@ -23,9 +23,12 @@ export const useFetchPokemonData = () => {
     // dataの中のresultsのurlを再度、eachPokemonDataに渡して、fetchしたものをsetPokemonでstateに格納する
     const pokemonData = await Promise.all(
       // ここのmapの中で、100からランダムに4つを取得する
-      data.results.map(async (pokemon: { url: string }) => {
-        return await eachPokemonData(pokemon.url)
-      }),
+      data.results
+        .map(async (pokemon: { url: string }) => {
+          return await eachPokemonData(pokemon.url)
+        })
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 4),
     )
     setPokemon(pokemonData)
   }

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { recoilProblemIndex } from "@/global/atom"
 import { useRecoilState } from "recoil"
-import { useFetchPokemonData } from "@/hooks/useFetchPokemonData"
-import { Loader } from "@mantine/core"
+import { useFetch4RandomPokemonData } from "@/hooks/useFetch4RandomPokemonData"
+import { Center, Loader, Text } from "@mantine/core"
 
 const Callback = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -11,36 +11,33 @@ const Callback = () => {
     useRecoilState<number>(recoilProblemIndex)
   const [loading, setLoading] = useState<boolean>(true)
 
-  const { fetchPokemonData, data } = useFetchPokemonData()
+  const { fetchPokemonData } = useFetch4RandomPokemonData()
 
   const router = useRouter()
 
   useEffect(() => {
-    fetchPokemonData().then(() => {
-      setLoading(false)
-      setProblemIndex(Math.floor(Math.random() * data.length))
-      router.push("/game")
-    })
+    fetchPokemonData()
+      .then(() => {
+        setProblemIndex(Math.floor(Math.random() * 4))
+      })
+      .then(() => {
+        setLoading(false)
+        router.push("/game")
+      })
   }, [])
 
   return (
     <div>
-      <div>
-        {loading ? (
-          <Loader />
-        ) : (
-          <div>
-            {data.map((item, index) => {
-              return (
-                <div key={index} className="flex flex-col items-center">
-                  <p className="font-bold">{item.name}</p>
-                  <img src={item.sprites.front_default} alt="Pokemon" />
-                </div>
-              )
-            })}
+      <Center className="min-h-screen">
+        {loading && (
+          <div className="flex flex-col justify-center items-center gap-5">
+            <Text size={40} weight={700}>
+              少し待ってね
+            </Text>
+            <Loader />
           </div>
         )}
-      </div>
+      </Center>
     </div>
   )
 }

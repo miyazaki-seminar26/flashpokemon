@@ -37,7 +37,7 @@ const Home = () => {
             router.push("/callback")
           }}
         >
-          スタート
+          はじめる
         </Button>
 
         <Center>
