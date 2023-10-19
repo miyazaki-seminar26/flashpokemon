@@ -34,7 +34,7 @@ const Home = () => {
             },
           }}
           onClick={() => {
-            router.push("/game")
+            router.push("/callback")
           }}
         >
           スタート
