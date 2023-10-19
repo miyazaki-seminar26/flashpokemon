@@ -3,7 +3,8 @@ import { useRouter } from "next/router"
 import { recoilProblemIndex } from "@/global/atom"
 import { useRecoilState } from "recoil"
 import { useFetch4RandomPokemonData } from "@/hooks/useFetch4RandomPokemonData"
-import { Center, Loader, Text } from "@mantine/core"
+import { Loader, Text } from "@mantine/core"
+import { Header } from "@/components/layout/header"
 
 const Callback = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -28,7 +29,10 @@ const Callback = () => {
 
   return (
     <div>
-      <Center className="min-h-screen">
+      <div className="absolute top-0">
+        <Header />
+      </div>
+      <div className="flex flex-col justify-center items-center pt-20">
         {loading && (
           <div className="flex flex-col justify-center items-center gap-5">
             <Text size={40} weight={700}>
@@ -37,7 +41,7 @@ const Callback = () => {
             <Loader />
           </div>
         )}
-      </Center>
+      </div>
     </div>
   )
 }

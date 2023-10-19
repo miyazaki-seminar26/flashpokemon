@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Button, Center, Text } from "@mantine/core"
+import { Button, Text } from "@mantine/core"
 import { Header } from "@/components/layout/header"
 import { LEVEL } from "@/constants/level"
 import { useRouter } from "next/router"
@@ -11,7 +11,7 @@ const FlashPokemonGame: React.FC = () => {
   const [showPokemons, setShowPokemons] = useState<boolean>(false)
   const problemPokemonLists = useRecoilValue(recoilPokemonList)
   const problemIndex = useRecoilValue(recoilProblemIndex)
-  const [, setCurrentPokemonIndex] = useState<number[]>([])
+  const [currentPokemonIndex, setCurrentPokemonIndex] = useState<number>(0)
   const [clickedPokemonIndex, setClickedPokemonIndex] = useState<number>(0)
 
   // 正解かどうかの判定
@@ -44,44 +44,52 @@ const FlashPokemonGame: React.FC = () => {
     if (showPokemons) {
       let currentIndex = 0
       const showPokemonInterval = setInterval(() => {
-        setCurrentPokemonIndex((prevCurrentPokemonIndex) => [
-          ...prevCurrentPokemonIndex,
-          currentIndex,
-        ])
-        currentIndex = Math.floor(Math.random() * 100)
-      }, 200) // 0.3秒ごとに次のポケモンを表示
+        // 1-4の乱数を生成
+        setCurrentPokemonIndex(currentIndex)
+        currentIndex = Math.floor(Math.random() * 4)
+      }, 200) // 0.2秒ごとに次のポケモンを表示
 
       setTimeout(() => {
         clearInterval(showPokemonInterval)
         setShowPokemons(false)
-      }, 200 * 4)
+      }, 300 * 4)
     }
   }, [showPokemons])
 
   return (
     <div>
-      <div className="absolute top-0">
+      <div className="h-20">
         <Header />
       </div>
-      <div className="min-h-screen flex flex-col items-center pt-20">
+      <div className="flex flex-col items-center justify-center h-full">
         {countdown > 0 ? (
-          <Center>
-            <h1>{countdown}</h1>
-          </Center>
+          <div className="flex flex-col justify-center items-center bg-green-300 rounded-full w-40 h-40">
+            <Text
+              weight="bold"
+              sx={{
+                fontSize: "32px",
+              }}
+            >
+              {countdown}
+            </Text>
+          </div>
         ) : (
           <div>
             {!answer && (
               <div>
                 {showPokemons ? (
-                  <div>
-                    {problemPokemonLists.map((item, index) => {
-                      return (
-                        <div key={index} className="flex flex-col items-center">
-                          <p className="font-bold">{item.name}</p>
-                          <img src={item.sprites.front_default} alt="Pokemon" />
-                        </div>
-                      )
-                    })}
+                  <div className="flex flex-col items-center">
+                    <p className="font-bold">
+                      {problemPokemonLists[currentPokemonIndex]?.name}
+                    </p>
+                    <img
+                      src={
+                        problemPokemonLists[currentPokemonIndex]?.sprites
+                          .front_default
+                      }
+                      alt="Pokemon"
+                      className="w-96 h-96"
+                    />
                   </div>
                 ) : (
                   <div className="flex flex-col items-center">
@@ -244,7 +252,7 @@ const FlashPokemonGame: React.FC = () => {
                     router.push("/")
                   }}
                 >
-                  もう一度
+                  トップへ戻る
                 </Button>
               </div>
             </div>
