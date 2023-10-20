@@ -47,7 +47,7 @@ const FlashPokemonGame: React.FC = () => {
         // 1-4の乱数を生成
         setCurrentPokemonIndex(currentIndex)
         currentIndex = Math.floor(Math.random() * 4)
-      }, 200) // 0.2秒ごとに次のポケモンを表示
+      }, 300) // 0.2秒ごとに次のポケモンを表示
 
       setTimeout(() => {
         clearInterval(showPokemonInterval)
@@ -63,11 +63,12 @@ const FlashPokemonGame: React.FC = () => {
       </div>
       <div className="flex flex-col items-center justify-center h-full">
         {countdown > 0 ? (
-          <div className="flex flex-col justify-center items-center bg-green-300 rounded-full w-40 h-40">
+          <div className="flex flex-col justify-center items-center bg-white rounded-full w-40 h-40">
             <Text
               weight="bold"
               sx={{
                 fontSize: "32px",
+                color: "#000",
               }}
             >
               {countdown}
