@@ -44,9 +44,14 @@ const FlashPokemonGame: React.FC = () => {
     if (showPokemons) {
       let currentIndex = 0
       const showPokemonInterval = setInterval(() => {
-        // 1-4の乱数を生成
+        // 1-4の乱数から1つを選択
+        currentIndex = Math.floor(Math.random() * 4) + 1
+        // この状態だと被りがあるので、1-4の中で前回currentIndexと異なるものを選択
+        while (currentIndex === currentPokemonIndex) {
+          currentIndex = Math.floor(Math.random() * 4) + 1
+        }
+        currentIndex = currentIndex - 1
         setCurrentPokemonIndex(currentIndex)
-        currentIndex = Math.floor(Math.random() * 4)
       }, 300) // 0.2秒ごとに次のポケモンを表示
 
       setTimeout(() => {
@@ -80,7 +85,7 @@ const FlashPokemonGame: React.FC = () => {
               <div>
                 {showPokemons ? (
                   <div className="flex flex-col items-center">
-                    <p className="font-bold">
+                    <p className="font-bold text-2xl">
                       {problemPokemonLists[currentPokemonIndex]?.name}
                     </p>
                     <img
